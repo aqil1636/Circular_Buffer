@@ -69,7 +69,7 @@ int main (void)
 	osKernelInitialize ();                    // initialize CMSIS-RTOS
 	USART1_Init();
 	item_semaphore = osSemaphoreCreate(osSemaphore(item_semaphore), 0);
-	space_semaphore = osSemaphoreCreate(osSemaphore(space_semaphore), N);
+	space_semaphore = osSemaphoreCreate(osSemaphore(space_semaphore), SIZE);
 	x_mutex = osMutexCreate(osMutex(x_mutex));	
 	
 	T_Pro = osThreadCreate(osThread(Producer_t), NULL);
