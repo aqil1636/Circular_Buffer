@@ -44,3 +44,35 @@ unsigned char get(){
 	osSemaphoreRelease(space_semaphore);
 	return out_data;
 }
+
+int loopcount = 20;
+
+void Producer_t (void const *argument) 
+{
+	unsigned char item = 0x30;
+	for(; p<loopcount; p++){
+		put(item++);
+	}
+}
+
+void Consumer_t (void const *argument) 
+{
+	unsigned int data = 0x00;
+	for(; c<loopcount; c++){
+		data = get();
+		SendChar(data);
+	}
+}
+
+int main (void) 
+{
+	osKernelInitialize ();                    // initialize CMSIS-RTOS
+	USART1_Init();
+	item_semaphore = osSemaphoreCreate(osSemaphore(item_semaphore), 0);
+	space_semaphore = osSemaphoreCreate(osSemaphore(space_semaphore), N);
+	x_mutex = osMutexCreate(osMutex(x_mutex));	
+	
+	T_Pro = osThreadCreate(osThread(Producer_t), NULL);
+	T_Con = osThreadCreate(osThread(Consumer_t), NULL);
+	osKernelStart ();                         // start thread execution 
+}
