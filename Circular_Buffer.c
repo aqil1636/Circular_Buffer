@@ -45,7 +45,7 @@ unsigned char get(){
 	return out_data;
 }
 
-int loopcount = 20;
+int loopcount = 10;
 
 void Producer_t (void const *argument) 
 {
